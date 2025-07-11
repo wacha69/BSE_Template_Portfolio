@@ -43,9 +43,7 @@ For your second milestone, explain what you've worked on since your previous mil
 
 # First Milestone
 
-**Don't forget to replace the text below with the embedding for your milestone video. Go to Youtube, click Share -> Embed, and copy and paste the code to replace what's below.**
-
-<iframe width="560" height="315" src="https://www.youtube.com/embed/CaCazFBhYKs" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+<iframe width="1617" height="640" src="https://www.youtube.com/embed/IZ7pv20wpT0" title="Roger Z Milestone 1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
 The button piano base kit consists of mechanical buttons that, when pressed, produce a distinct sound through the Arduino Uno Board that can be modified inside the Arduino IDE. Right now, not all of the code can be shown physically working, due to the temporary use of a passive buzzer instead of a piezo buzzer. A piezo buzzer uses something called the piezoelectric effect, which uses crystals to generate an electric charge that will cause sound to play. A piezo buzzer has been ordered so you will hopefully see a piezo buzzer working in other milestone videos. I also asked my instructor to order mini speakers that will allow me to add reverb, and maybe even turn my button piano into some kind of soundboard in the future. In my second milestone, I hope to code more functionality to my button piano like reverb, be able to assemble a well-designed breadboard, and debug as much of the code as possible. 
 
@@ -53,6 +51,8 @@ The button piano base kit consists of mechanical buttons that, when pressed, pro
 Here's where you'll put images of your schematics. [Tinkercad](https://www.tinkercad.com/blog/official-guide-to-tinkercad-circuits) and [Fritzing](https://fritzing.org/learning/) are both great resoruces to create professional schematic diagrams, though BSE recommends Tinkercad becuase it can be done easily and for free in the browser. 
 
 # Code
+
+```c++
 #define KEY_C 262    // (Middle C)
 #define KEY_D 294     
 #define KEY_E 330    
@@ -157,19 +157,6 @@ void loop() {
     currentNoteIndex = -1;
     heldNoteCount = 0;
   }
-}
-
-
-```c++
-void setup() {
-  // put your setup code here, to run once:
-  Serial.begin(9600);
-  Serial.println("Hello World!");
-}
-
-void loop() {
-  // put your main code here, to run repeatedly:
-
 }
 ```
 
