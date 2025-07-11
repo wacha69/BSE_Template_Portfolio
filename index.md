@@ -1,5 +1,5 @@
 # Button Piano
-Replace this text with a brief description (2-3 sentences) of your project. This description should draw the reader in and make them interested in what you've built. You can include what the biggest challenges, takeaways, and triumphs from completing the project were. As you complete your portfolio, remember your audience is less familiar than you are with all that your project entails!
+I created a button piano that bears the most similarities to an actual piano. This, of course, meant incorporating actual pedaling with your feet, as well as modifications like reverb with a speaker. Building the actual piano itself was not the real challenge; rather, the code and trying to mimic the functionality of an actual piano/keyboard, which you would play as an instrument, were the real challenges.
 
 You should comment out all portions of your portfolio that you have not completed yet, as well as any instructions:
 ```HTML 
@@ -19,7 +19,7 @@ You should comment out all portions of your portfolio that you have not complete
 
 **Don't forget to replace the text below with the embedding for your milestone video. Go to Youtube, click Share -> Embed, and copy and paste the code to replace what's below.**
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/F7M7imOVGug" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+<iframe width="1617" height="640" src="https://www.youtube.com/embed/IZ7pv20wpT0" title="Roger Z Milestone 1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
 For your final milestone, explain the outcome of your project. Key details to include are:
 - What you've accomplished since your previous milestone
@@ -47,17 +47,118 @@ For your second milestone, explain what you've worked on since your previous mil
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/CaCazFBhYKs" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
-For your first milestone, describe what your project is and how you plan to build it. You can include:
-- An explanation about the different components of your project and how they will all integrate together
-- Technical progress you've made so far
-- Challenges you're facing and solving in your future milestones
-- What your plan is to complete your project
+The button piano base kit consists of mechanical buttons that, when pressed, produce a distinct sound through the Arduino Uno Board that can be modified inside the Arduino IDE. Right now, not all of the code can be shown physically working, due to the temporary use of a passive buzzer instead of a piezo buzzer. A piezo buzzer uses something called the piezoelectric effect, which uses crystals to generate an electric charge that will cause sound to play. A piezo buzzer has been ordered so you will hopefully see a piezo buzzer working in other milestone videos. I also asked my instructor to order mini speakers that will allow me to add reverb, and maybe even turn my button piano into some kind of soundboard in the future. In my second milestone, I hope to code more functionality to my button piano like reverb, be able to assemble a well-designed breadboard, and debug as much of the code as possible. 
 
 # Schematics 
 Here's where you'll put images of your schematics. [Tinkercad](https://www.tinkercad.com/blog/official-guide-to-tinkercad-circuits) and [Fritzing](https://fritzing.org/learning/) are both great resoruces to create professional schematic diagrams, though BSE recommends Tinkercad becuase it can be done easily and for free in the browser. 
 
 # Code
-Here's where you'll put your code. The syntax below places it into a block of code. Follow the guide [here]([url](https://www.markdownguide.org/extended-syntax/)) to learn how to customize it to your project needs. 
+#define KEY_C 262    // (Middle C)
+#define KEY_D 294     
+#define KEY_E 330    
+#define KEY_F 350    
+#define KEY_G 392    
+#define KEY_A 440    
+#define KEY_B 494    
+#define KEY_C1 523   // (One octave above middle C)
+#define KEY_D1 587    
+
+const int NUM_KEYS = 9;
+
+const int INPUT_BUTTON_PINS[NUM_KEYS] = {2, 3, 4, 5, 6, 7, 8, 9, 10};
+const int NOTE_FREQUENCIES[NUM_KEYS] = {
+  KEY_C, KEY_D, KEY_E, KEY_F, KEY_G, KEY_A, KEY_B, KEY_C1, KEY_D1
+};
+const char* NOTE_NAMES[NUM_KEYS] = {
+  "C", "D", "E", "F", "G", "A", "B", "C1", "D1"
+};
+
+const int OUTPUT_PIEZO_PIN = 11;
+const int OUTPUT_LED_PIN = LED_BUILTIN;
+
+const boolean _buttonsAreActiveLow = true;
+const int DEBOUNCE_WINDOW = 10; // milliseconds
+
+int _prevRawButtonVals[NUM_KEYS];
+int _debouncedButtonVals[NUM_KEYS];
+unsigned long _buttonStateChangeTimestamps[NUM_KEYS];
+
+int currentNoteIndex = -1;
+int lastPrintedNoteIndex = -1;
+unsigned long lastNotePrintTime = 0;
+int heldNoteCount = 0;
+
+void setup() {
+  Serial.begin(9600);
+  Serial.println("Starting piano debug...");
+
+  for (int i = 0; i < NUM_KEYS; i++) {
+    pinMode(INPUT_BUTTON_PINS[i], INPUT_PULLUP);
+    _prevRawButtonVals[i] = digitalRead(INPUT_BUTTON_PINS[i]);
+    _debouncedButtonVals[i] = _prevRawButtonVals[i];
+    _buttonStateChangeTimestamps[i] = millis();
+  }
+
+  pinMode(OUTPUT_PIEZO_PIN, OUTPUT);
+  pinMode(OUTPUT_LED_PIN, OUTPUT);
+}
+
+void loop() {
+  bool anyKeyPressed = false;
+  int activeNoteIndex = -1;
+
+  for (int i = 0; i < NUM_KEYS; i++) {
+    int rawVal = digitalRead(INPUT_BUTTON_PINS[i]);
+
+    if (rawVal != _prevRawButtonVals[i]) {
+      _buttonStateChangeTimestamps[i] = millis();
+    }
+
+    if ((millis() - _buttonStateChangeTimestamps[i]) >= DEBOUNCE_WINDOW) {
+      _debouncedButtonVals[i] = rawVal;
+    }
+
+    _prevRawButtonVals[i] = rawVal;
+
+    bool pressed = (_buttonsAreActiveLow && _debouncedButtonVals[i] == LOW) ||
+                   (!_buttonsAreActiveLow && _debouncedButtonVals[i] == HIGH);
+
+    if (pressed) {
+      activeNoteIndex = i;
+      anyKeyPressed = true;
+      break;  // Only play one note at a time
+    }
+  }
+
+  if (anyKeyPressed && activeNoteIndex != -1) {
+    tone(OUTPUT_PIEZO_PIN, NOTE_FREQUENCIES[activeNoteIndex]);
+    digitalWrite(OUTPUT_LED_PIN, HIGH);
+
+    if (activeNoteIndex == currentNoteIndex) {
+      heldNoteCount++;
+    } else {
+      heldNoteCount = 1;
+      currentNoteIndex = activeNoteIndex;
+    }
+    // Debugging purposes and testing debouncing buttons
+    if (currentNoteIndex != lastPrintedNoteIndex || millis() - lastNotePrintTime > 300) {
+      Serial.print("Playing note: ");
+      Serial.print(NOTE_NAMES[currentNoteIndex]);
+      Serial.print(" [");
+      Serial.print(heldNoteCount);
+      Serial.println("]");
+      lastPrintedNoteIndex = currentNoteIndex;
+      lastNotePrintTime = millis();
+    }
+
+  } else {
+    noTone(OUTPUT_PIEZO_PIN);
+    digitalWrite(OUTPUT_LED_PIN, LOW);
+    currentNoteIndex = -1;
+    heldNoteCount = 0;
+  }
+}
+
 
 ```c++
 void setup() {
