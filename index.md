@@ -35,11 +35,7 @@ For your final milestone, explain the outcome of your project. Key details to in
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/y3VAmNlER5Y" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
-For your second milestone, explain what you've worked on since your previous milestone. You can highlight:
-- Technical details of what you've accomplished and how they contribute to the final goal
-- What has been surprising about the project so far
-- Previous challenges you faced that you overcame
-- What needs to be completed before your final milestone 
+In the first milestone, my instructor and I ordered mini speakers, a SD card, a DFPlayer, and wires to further enhance my project. By implementing speakers instead of piezo buzzers, I figured out that I could produce more robust sounds while not being limited to only one frequency. This meant I was also able to achieve another goal of adding sound effects alongside playing single notes. There is a limit of only being able to play 3 notes at once due to the Arduino Uno kit's limitation, so adding sound effects was a way around that. I was not able to add reverb yet since one of the biggest challenges I had this week was actually getting the DFPlayer installed, and also using an external computer to add mp3 files, since my main computer couldn't detect SD cards. A pedal system is currently being organized, and my code reflects that by this milestone. However, the hardware itself will be shown next week due to new parts coming in (wires not being long enough).
 
 # First Milestone
 
