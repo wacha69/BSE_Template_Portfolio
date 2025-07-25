@@ -43,111 +43,164 @@ Here's where you'll put images of your schematics. [Tinkercad](https://www.tinke
 # Code
 
 ```c++
-#define KEY_C 262    // (Middle C)
-#define KEY_D 294     
-#define KEY_E 330    
-#define KEY_F 350    
-#define KEY_G 392    
-#define KEY_A 440    
-#define KEY_B 494    
-#define KEY_C1 523   // (One octave above middle C)
-#define KEY_D1 587    
+#include <AltSoftSerial.h>
+#include <DFRobotDFPlayerMini.h>
 
-const int NUM_KEYS = 9;
+// NOTE FREQUENCIES
+const int NUM_KEYS = 7;
+const int INPUT_BUTTON_PINS[NUM_KEYS] = {10, 11, 12, 13, A0, A1, A2};
 
-const int INPUT_BUTTON_PINS[NUM_KEYS] = {2, 3, 4, 5, 6, 7, 8, 9, 10};
-const int NOTE_FREQUENCIES[NUM_KEYS] = {
-  KEY_C, KEY_D, KEY_E, KEY_F, KEY_G, KEY_A, KEY_B, KEY_C1, KEY_D1
-};
-const char* NOTE_NAMES[NUM_KEYS] = {
-  "C", "D", "E", "F", "G", "A", "B", "C1", "D1"
-};
+// Mode 1: C, C#, D, D#, E, F, F#
+const int MODE1_NOTES[NUM_KEYS] = {262, 277, 294, 311, 330, 349, 370};
+const char* MODE1_NAMES[NUM_KEYS] = {"C", "C#", "D", "D#", "E", "F", "F#"};
 
-const int OUTPUT_PIEZO_PIN = 11;
-const int OUTPUT_LED_PIN = LED_BUILTIN;
+// Mode 2: G, G#, A, A#, B, C, C#
+const int MODE2_NOTES[NUM_KEYS] = {392, 415, 440, 466, 494, 523, 554};
+const char* MODE2_NAMES[NUM_KEYS] = {"G", "G#", "A", "A#", "B", "C", "C#"};
 
-const boolean _buttonsAreActiveLow = true;
-const int DEBOUNCE_WINDOW = 10; // milliseconds
+// PIN DEFINITIONS
+const int SPEAKER_PIN = 2;
+const int VOLUME_BUTTON_PIN = 6;
+const int SFX_BUTTON_PIN = 5;
+const int MODE_SWITCH_BUTTON_PIN = 4;
 
-int _prevRawButtonVals[NUM_KEYS];
-int _debouncedButtonVals[NUM_KEYS];
-unsigned long _buttonStateChangeTimestamps[NUM_KEYS];
+// STATE VARIABLES
+int volumeLevels[6] = {5, 10, 15, 20, 25, 30};
+int currentVolumeIndex = 3;
+int currentSoundIndex = 1;
 
-int currentNoteIndex = -1;
-int lastPrintedNoteIndex = -1;
-unsigned long lastNotePrintTime = 0;
-int heldNoteCount = 0;
+bool sharpMode = false;
+
+bool keyPressed[NUM_KEYS] = {false};
+bool keyPreviouslyPressed[NUM_KEYS] = {false};
+int currentlyPlayingNote = -1;
+
+bool lastVolumeButtonState = HIGH;
+bool lastSfxButtonState = HIGH;
+bool lastModeButtonState = HIGH;
+
+// DFPlayer
+AltSoftSerial mySerial;
+DFRobotDFPlayerMini myDFPlayer;
 
 void setup() {
   Serial.begin(9600);
-  Serial.println("Starting piano debug...");
+  Serial.println("Starting Piano + DFPlayer...");
 
+  // Piano buttons
   for (int i = 0; i < NUM_KEYS; i++) {
     pinMode(INPUT_BUTTON_PINS[i], INPUT_PULLUP);
-    _prevRawButtonVals[i] = digitalRead(INPUT_BUTTON_PINS[i]);
-    _debouncedButtonVals[i] = _prevRawButtonVals[i];
-    _buttonStateChangeTimestamps[i] = millis();
   }
 
-  pinMode(OUTPUT_PIEZO_PIN, OUTPUT);
-  pinMode(OUTPUT_LED_PIN, OUTPUT);
+  // Control buttons
+  pinMode(VOLUME_BUTTON_PIN, INPUT_PULLUP);
+  pinMode(SFX_BUTTON_PIN, INPUT_PULLUP);
+  pinMode(MODE_SWITCH_BUTTON_PIN, INPUT_PULLUP);
+
+  // DFPlayer
+  mySerial.begin(9600);
+  if (!myDFPlayer.begin(mySerial)) {
+    Serial.println("❌ DFPlayer Mini not detected!");
+    while (true);
+  }
+
+  Serial.println("✅ DFPlayer Mini ready!");
+  myDFPlayer.volume(volumeLevels[currentVolumeIndex]);
+  myDFPlayer.play(1);
+  delay(1000);
 }
 
 void loop() {
-  bool anyKeyPressed = false;
-  int activeNoteIndex = -1;
+  // Volume Button
+  bool volumeButtonState = digitalRead(VOLUME_BUTTON_PIN);
+  if (volumeButtonState == LOW && lastVolumeButtonState == HIGH) {
+    currentVolumeIndex = (currentVolumeIndex + 1) % 6;
+    myDFPlayer.volume(volumeLevels[currentVolumeIndex]);
+    Serial.print("🔊 Volume set to: ");
+    Serial.println(volumeLevels[currentVolumeIndex]);
+    delay(200);  // debounce
+  }
+  lastVolumeButtonState = volumeButtonState;
 
+  // Sound FX Button
+  bool sfxButtonState = digitalRead(SFX_BUTTON_PIN);
+  if (sfxButtonState == LOW && lastSfxButtonState == HIGH) {
+    currentSoundIndex++;
+    if (currentSoundIndex > 5) currentSoundIndex = 1;
+    myDFPlayer.play(currentSoundIndex);
+    Serial.print("🎵 Playing SFX: ");
+    Serial.println(currentSoundIndex);
+    delay(200);  // debounce
+  }
+  lastSfxButtonState = sfxButtonState;
+
+  // Mode Switch Button
+  bool modeButtonState = digitalRead(MODE_SWITCH_BUTTON_PIN);
+  if (modeButtonState == LOW && lastModeButtonState == HIGH) {
+    sharpMode = !sharpMode;
+    Serial.print("🔁 Switched to mode: ");
+    Serial.println(sharpMode ? "2 (G to C#)" : "1 (C to F#)");
+    delay(200);  // debounce
+  }
+  lastModeButtonState = modeButtonState;
+
+  // Read Piano Button States
   for (int i = 0; i < NUM_KEYS; i++) {
-    int rawVal = digitalRead(INPUT_BUTTON_PINS[i]);
+    keyPressed[i] = (digitalRead(INPUT_BUTTON_PINS[i]) == LOW);
+  }
 
-    if (rawVal != _prevRawButtonVals[i]) {
-      _buttonStateChangeTimestamps[i] = millis();
-    }
-
-    if ((millis() - _buttonStateChangeTimestamps[i]) >= DEBOUNCE_WINDOW) {
-      _debouncedButtonVals[i] = rawVal;
-    }
-
-    _prevRawButtonVals[i] = rawVal;
-
-    bool pressed = (_buttonsAreActiveLow && _debouncedButtonVals[i] == LOW) ||
-                   (!_buttonsAreActiveLow && _debouncedButtonVals[i] == HIGH);
-
-    if (pressed) {
-      activeNoteIndex = i;
-      anyKeyPressed = true;
-      break;  // Only play one note at a time
+  // Play new note
+  for (int i = 0; i < NUM_KEYS; i++) {
+    if (keyPressed[i] && !keyPreviouslyPressed[i]) {
+      if (currentlyPlayingNote != -1) {
+        noTone(SPEAKER_PIN);
+      }
+      int freq = sharpMode ? MODE2_NOTES[i] : MODE1_NOTES[i];
+      tone(SPEAKER_PIN, freq);
+      currentlyPlayingNote = i;
+      break;
     }
   }
 
-  if (anyKeyPressed && activeNoteIndex != -1) {
-    tone(OUTPUT_PIEZO_PIN, NOTE_FREQUENCIES[activeNoteIndex]);
-    digitalWrite(OUTPUT_LED_PIN, HIGH);
-
-    if (activeNoteIndex == currentNoteIndex) {
-      heldNoteCount++;
-    } else {
-      heldNoteCount = 1;
-      currentNoteIndex = activeNoteIndex;
+  // Stop tone if no buttons held
+  bool anyHeld = false;
+  for (int i = 0; i < NUM_KEYS; i++) {
+    if (keyPressed[i]) {
+      anyHeld = true;
+      break;
     }
-    // Debugging purposes and testing debouncing buttons
-    if (currentNoteIndex != lastPrintedNoteIndex || millis() - lastNotePrintTime > 300) {
-      Serial.print("Playing note: ");
-      Serial.print(NOTE_NAMES[currentNoteIndex]);
-      Serial.print(" [");
-      Serial.print(heldNoteCount);
-      Serial.println("]");
-      lastPrintedNoteIndex = currentNoteIndex;
-      lastNotePrintTime = millis();
-    }
+  }
 
+  if (!anyHeld && currentlyPlayingNote != -1) {
+    noTone(SPEAKER_PIN);
+    currentlyPlayingNote = -1;
+  }
+
+  // Save previous button states
+  for (int i = 0; i < NUM_KEYS; i++) {
+    keyPreviouslyPressed[i] = keyPressed[i];
+  }
+
+  // Serial Debug Output
+  Serial.print("Note: ");
+  if (currentlyPlayingNote != -1) {
+    Serial.print(sharpMode ? MODE2_NAMES[currentlyPlayingNote] : MODE1_NAMES[currentlyPlayingNote]);
   } else {
-    noTone(OUTPUT_PIEZO_PIN);
-    digitalWrite(OUTPUT_LED_PIN, LOW);
-    currentNoteIndex = -1;
-    heldNoteCount = 0;
+    Serial.print("None");
   }
+
+  Serial.print(" | Volume: ");
+  Serial.print(volumeLevels[currentVolumeIndex]);
+
+  Serial.print(" | SFX: ");
+  Serial.print(currentSoundIndex);
+
+  Serial.print(" | Mode: ");
+  Serial.println(sharpMode ? "2" : "1");
+
+  delay(20);
 }
+
 ```
 
 # Bill of Materials
@@ -156,7 +209,7 @@ Don't forget to place the link of where to buy each component inside the quotati
 
 | **Part** | **Note** | **Price** | **Link** |
 |:--:|:--:|:--:|:--:|
-| Item Name | What the item is used for | $Price | <a href="https://www.amazon.com/Arduino-A000066-ARDUINO-UNO-R3/dp/B008GRTSV6/"> Link </a> |
+| Arudino Uno V3 Kit | wer | $Price | <a href="https://www.amazon.com/ELEGOO-Project-Tutorial-Controller-Projects/dp/B01D8KOZF4/ref=sr_1_4?crid=1XZ687M5D3ZD7&dib=eyJ2IjoiMSJ9.-TMWe7jTY1L2k9FBx9xn4w0XaflU8V_pGx85CZStFn6a-TH39OcB3AGzWNf1EIKw2NMgmEaYxpeY4ciYOp9QPCkKkCHXzB47RzVfKVwctCAOcXjByS5fDtVU5eKf3uCaofFvxa3UklTDqup5O4yWXeSDefi-Kfmv3K6g6nDa4S2vd3YAFmKNxfpSLBu9JAdQz3IXb7qYzNyoGiMc98SLmd33BsMJO-Z92GizCC3e4Rw.sEr7nXWiJ-3djacq_uV2qAdWY1JvlsT99KX0mtxhk88&dib_tag=se&keywords=arduino+uno+r3+kit+elegoo&qid=1753466503&sprefix=arduino+uno+r3+kit+elego%2Caps%2C135&sr=8-4"> Link </a> |
 | Item Name | What the item is used for | $Price | <a href="https://www.amazon.com/Arduino-A000066-ARDUINO-UNO-R3/dp/B008GRTSV6/"> Link </a> |
 | Item Name | What the item is used for | $Price | <a href="https://www.amazon.com/Arduino-A000066-ARDUINO-UNO-R3/dp/B008GRTSV6/"> Link </a> |
 
