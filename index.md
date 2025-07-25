@@ -21,13 +21,7 @@ You should comment out all portions of your portfolio that you have not complete
 
 <iframe width="1617" height="640" src="https://www.youtube.com/embed/IZ7pv20wpT0" title="Roger Z Milestone 1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
-For your final milestone, explain the outcome of your project. Key details to include are:
-- What you've accomplished since your previous milestone
-- What your biggest challenges and triumphs were at BSE
-- A summary of key topics you learned about
-- What you hope to learn in the future after everything you've learned at BSE
-
-
+In my final milestone, I was able to install a DFPlayer onto my breadboard. This was by far the biggest challenge, since I had to read a couple articles on what each pin on the player meant, how to wire it properly, how to apply Ohm's law with resisters, and finding the space to plcae it on my single breadboard. In the end, I was able to install my DFPlayer, with the limitation that my piano buttons no longer could play more than 3 sounds at a time. This is due to the tone functions associated with the DFPlayer and the buttons, but I figured it was ok because the DFPlayer can play MP3 files, which have more than 3 frequencies. I then also installed 3 blue buttons; one that adjusts the volume for the DFPlayer alone; one that changes the mp3 file in the DFPlayer; and one that shifts the frequenies of the buttons to play higher notes. I am very happy with my modifications, and my project had transformed into something I love as a pianist myself. After BSE, I hope to develop new projects with my newly gained automacy throughout the BSE experience. 
 
 # Second Milestone
 
