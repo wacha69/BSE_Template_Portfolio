@@ -9,15 +9,11 @@ I created a button piano that bears the most similarities to an actual piano. Th
   
 # Final Milestone
 
-**Don't forget to replace the text below with the embedding for your milestone video. Go to Youtube, click Share -> Embed, and copy and paste the code to replace what's below.**
-
 <iframe width="900" height="640" src="https://www.youtube.com/embed/buvQmXZjCv4" title="Roger Z Final Milestone" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
 In my final milestone, I was able to install a DFPlayer onto my breadboard. This was by far the biggest challenge, since I had to read a couple articles on what each pin on the player meant, how to wire it properly, how to apply Ohm's law with resisters, and finding the space to plcae it on my single breadboard. In the end, I was able to install my DFPlayer, with the limitation that my piano buttons no longer could play more than 3 sounds at a time. This is due to the tone functions associated with the DFPlayer and the buttons, but I figured it was ok because the DFPlayer can play MP3 files, which have more than 3 frequencies. I then also installed 3 blue buttons; one that adjusts the volume for the DFPlayer alone; one that changes the mp3 file in the DFPlayer; and one that shifts the frequenies of the buttons to play higher notes. I am very happy with my modifications, and my project had transformed into something I love as a pianist myself. After BSE, I hope to develop new projects with my newly gained automacy throughout the BSE experience. 
 
 # Second Milestone
-
-**Don't forget to replace the text below with the embedding for your milestone video. Go to Youtube, click Share -> Embed, and copy and paste the code to replace what's below.**
 
 <iframe width="900" height="640" src="https://www.youtube.com/embed/zfSU4IxlW_s" title="Roger Z Milestone 2" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
@@ -30,7 +26,7 @@ In the first milestone, my instructor and I ordered mini speakers, a SD card, a 
 The button piano base kit consists of mechanical buttons that, when pressed, produce a distinct sound through the Arduino Uno Board that can be modified inside the Arduino IDE. Right now, not all of the code can be shown physically working, due to the temporary use of a passive buzzer instead of a piezo buzzer. A piezo buzzer uses something called the piezoelectric effect, which uses crystals to generate an electric charge that will cause sound to play. A piezo buzzer has been ordered so you will hopefully see a piezo buzzer working in other milestone videos. I also asked my instructor to order mini speakers that will allow me to add reverb, and maybe even turn my button piano into some kind of soundboard in the future. In my second milestone, I hope to code more functionality to my button piano like reverb, be able to assemble a well-designed breadboard, and debug as much of the code as possible. 
 
 # Schematics 
-Here's where you'll put images of your schematics. [Tinkercad](https://www.tinkercad.com/blog/official-guide-to-tinkercad-circuits) and [Fritzing](https://fritzing.org/learning/) are both great resoruces to create professional schematic diagrams, though BSE recommends Tinkercad becuase it can be done easily and for free in the browser. 
+
 
 # Code
 
@@ -201,7 +197,7 @@ Don't forget to place the link of where to buy each component inside the quotati
 
 | **Part** | **Note** | **Price** | **Link** |
 |:--:|:--:|:--:|:--:|
-| Arudino Uno V3 Kit | wer | $Price | <a href="https://www.amazon.com/ELEGOO-Project-Tutorial-Controller-Projects/dp/B01D8KOZF4/ref=sr_1_4?crid=1XZ687M5D3ZD7&dib=eyJ2IjoiMSJ9.-TMWe7jTY1L2k9FBx9xn4w0XaflU8V_pGx85CZStFn6a-TH39OcB3AGzWNf1EIKw2NMgmEaYxpeY4ciYOp9QPCkKkCHXzB47RzVfKVwctCAOcXjByS5fDtVU5eKf3uCaofFvxa3UklTDqup5O4yWXeSDefi-Kfmv3K6g6nDa4S2vd3YAFmKNxfpSLBu9JAdQz3IXb7qYzNyoGiMc98SLmd33BsMJO-Z92GizCC3e4Rw.sEr7nXWiJ-3djacq_uV2qAdWY1JvlsT99KX0mtxhk88&dib_tag=se&keywords=arduino+uno+r3+kit+elegoo&qid=1753466503&sprefix=arduino+uno+r3+kit+elego%2Caps%2C135&sr=8-4"> Link </a> |
+| Arudino Uno R3 Kit | wer | $Price | <a href="https://www.amazon.com/ELEGOO-Project-Tutorial-Controller-Projects/dp/B01D8KOZF4/ref=sr_1_4?crid=1XZ687M5D3ZD7&dib=eyJ2IjoiMSJ9.-TMWe7jTY1L2k9FBx9xn4w0XaflU8V_pGx85CZStFn6a-TH39OcB3AGzWNf1EIKw2NMgmEaYxpeY4ciYOp9QPCkKkCHXzB47RzVfKVwctCAOcXjByS5fDtVU5eKf3uCaofFvxa3UklTDqup5O4yWXeSDefi-Kfmv3K6g6nDa4S2vd3YAFmKNxfpSLBu9JAdQz3IXb7qYzNyoGiMc98SLmd33BsMJO-Z92GizCC3e4Rw.sEr7nXWiJ-3djacq_uV2qAdWY1JvlsT99KX0mtxhk88&dib_tag=se&keywords=arduino+uno+r3+kit+elegoo&qid=1753466503&sprefix=arduino+uno+r3+kit+elego%2Caps%2C135&sr=8-4"> Link </a> |
 | Item Name | What the item is used for | $Price | <a href="https://www.amazon.com/Arduino-A000066-ARDUINO-UNO-R3/dp/B008GRTSV6/"> Link </a> |
 | Item Name | What the item is used for | $Price | <a href="https://www.amazon.com/Arduino-A000066-ARDUINO-UNO-R3/dp/B008GRTSV6/"> Link </a> |
 
