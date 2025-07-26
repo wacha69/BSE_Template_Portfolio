@@ -193,19 +193,11 @@ void loop() {
 ```
 
 # Bill of Materials
-Here's where you'll list the parts in your project. To add more rows, just copy and paste the example rows below.
-Don't forget to place the link of where to buy each component inside the quotation marks in the corresponding row after href =. Follow the guide [here]([url](https://www.markdownguide.org/extended-syntax/)) to learn how to customize this to your project needs. 
 
 | **Part** | **Note** | **Price** | **Link** |
 |:--:|:--:|:--:|:--:|
-| Arudino Uno R3 Kit | wer | $Price | <a href="https://www.amazon.com/ELEGOO-Project-Tutorial-Controller-Projects/dp/B01D8KOZF4/ref=sr_1_4?crid=1XZ687M5D3ZD7&dib=eyJ2IjoiMSJ9.-TMWe7jTY1L2k9FBx9xn4w0XaflU8V_pGx85CZStFn6a-TH39OcB3AGzWNf1EIKw2NMgmEaYxpeY4ciYOp9QPCkKkCHXzB47RzVfKVwctCAOcXjByS5fDtVU5eKf3uCaofFvxa3UklTDqup5O4yWXeSDefi-Kfmv3K6g6nDa4S2vd3YAFmKNxfpSLBu9JAdQz3IXb7qYzNyoGiMc98SLmd33BsMJO-Z92GizCC3e4Rw.sEr7nXWiJ-3djacq_uV2qAdWY1JvlsT99KX0mtxhk88&dib_tag=se&keywords=arduino+uno+r3+kit+elegoo&qid=1753466503&sprefix=arduino+uno+r3+kit+elego%2Caps%2C135&sr=8-4"> Link </a> |
-| Item Name | What the item is used for | $Price | <a href="https://www.amazon.com/Arduino-A000066-ARDUINO-UNO-R3/dp/B008GRTSV6/"> Link </a> |
-| Item Name | What the item is used for | $Price | <a href="https://www.amazon.com/Arduino-A000066-ARDUINO-UNO-R3/dp/B008GRTSV6/"> Link </a> |
-
-# Other Resources/Examples
-One of the best parts about Github is that you can view how other people set up their own work. Here are some past BSE portfolios that are awesome examples. You can view how they set up their portfolio, and you can view their index.md files to understand how they implemented different portfolio components.
-- [Example 1](https://trashytuber.github.io/YimingJiaBlueStamp/)
-- [Example 2](https://sviatil0.github.io/Sviatoslav_BSE/)
-- [Example 3](https://arneshkumar.github.io/arneshbluestamp/)
-
-To watch the BSE tutorial on how to create a portfolio, click here.
+| Arudino Uno R3 Kit | Super Starter Kit with a ton of different projects for modifications | $44.99 | <a href="https://www.amazon.com/ELEGOO-Project-Tutorial-Controller-Projects/dp/B01D8KOZF4/ref=sr_1_4?crid=1XZ687M5D3ZD7&dib=eyJ2IjoiMSJ9.-TMWe7jTY1L2k9FBx9xn4w0XaflU8V_pGx85CZStFn6a-TH39OcB3AGzWNf1EIKw2NMgmEaYxpeY4ciYOp9QPCkKkCHXzB47RzVfKVwctCAOcXjByS5fDtVU5eKf3uCaofFvxa3UklTDqup5O4yWXeSDefi-Kfmv3K6g6nDa4S2vd3YAFmKNxfpSLBu9JAdQz3IXb7qYzNyoGiMc98SLmd33BsMJO-Z92GizCC3e4Rw.sEr7nXWiJ-3djacq_uV2qAdWY1JvlsT99KX0mtxhk88&dib_tag=se&keywords=arduino+uno+r3+kit+elegoo&qid=1753466503&sprefix=arduino+uno+r3+kit+elego%2Caps%2C135&sr=8-4"> Amazon </a> |
+| Piezo Buzzers | Used for playing single sounds | ~$2.99 | <a href="[https://www.amazon.com/Arduino-A000066-ARDUINO-UNO-R3/dp/B008GRTSV6/](https://www.mouser.com/ProductDetail/810-PS1240P02BT)"> Mouser </a> |
+| Mini Speakers | To play sounds with mulitple frequencies | $9.99 | <a href="[https://www.amazon.com/Arduino-A000066-ARDUINO-UNO-R3/dp/B008GRTSV6/](https://www.amazon.com/DWEII-Loundspeaker-Compatible-Motherboard-Electronic/dp/B0CX1JC6NM/ref=sr_1_6?dib=eyJ2IjoiMSJ9.FxuzjXkPr41Aq06cVivzUVbcdF02OCQ7zj6Qp5f9eUu8EOjog1hLbHKjpiKcn9ihbq8pn76O3Gs1SSOTF3SPQcJ9L9aGRX73-WXqedMsdCXwlxG_fhzmY69Z4nNKLvvfB7I3ZxqqB5QpCcc_wQ7-alFywmWmQyoRdJ4UPqEWAB1ST8luDP216h4BBxBqT1-RfoVR2rPWeaF2Y9IYfFq-dQm-vwrxPLc9FurQmR667dQ.3I3pIVf3-VIr0d91z6pWo4yzpadQWMJ-sSDKhE35ACQ&dib_tag=se&keywords=arduino%2Bspeaker&qid=1752093872&sr=8-6&th=1)"> Amazon </a> |
+| DFPlayer Mini | Converts mp3 files to be played with features | $9.99 | <a href="https://www.amazon.com/DFPlayer-A-Mini-MP3-Player/dp/B089D5NLW1/ref=sr_1_4?crid=3UIQER0PZFEPQ&dib=eyJ2IjoiMSJ9.YrXsgIIjUaSsAEXykz_XhQppXDKwD0Dfh_PnkcaT0uEPjTvv6mrKIKSqi56OUQrLUL3XMdn6QHdXY7llWivVycKz2FlFarF5nWp_f4wbRtPpQGutaF3KkJWWZ2fdMN3zJOudlrx4l-4sc_3UGKbCA1teHU-ue7xKwxZ_3p4XxJCN22r7n9ZoBUztJ4_IZV_mJWgQzSgu1lJUr_c3SlwpKIFvtlyz65HHg0sy6XcpXak.i1qKCcSgZBrjwgcsrZnVCrhxh8GrqJO_lfo3oLdVpk4&dib_tag=se&keywords=DFPlayer+mini&qid=1753498237&sprefix=dfplayer+min%2Caps%2C147&sr=8-4"> Amazon </a> |
+| Micro SD Cards | Store mp3 files in | $15.99 | <a href="https://www.amazon.com/Lexar-Micro-microSDXC-Memory-Adapter/dp/B09JNKHJ2Q/ref=sr_1_3?crid=2ATR7QR98NZT9&dib=eyJ2IjoiMSJ9.r9uGNZ9n35tnVXT1xRj81jbNisjOCOIUxdxTNc5bVMj8r0jmJBs7MI4-bXBtB-q1hiO-dBgWcrZ5TsK9txJbGl87eFpMlCNbZp35ovL0_ekuFUpMQ-ilBa5hdIblRD0Ti-qwiIuZiawrAl0jXCFNVQ_vUd5d-TrbAHbmBlPsseStJNzT1Jd_4IIVTJQ_T_Bo6_hbEBNG-FknWgJVKe1D4cHehEZjRSqpwS987KQKPzg.S9mUZfyTV9SU7Xr-0CV9wr7NwZv970kl93r56SC87bo&dib_tag=se&keywords=lexar+64gb+sd+cards+micro&qid=1753498347&sprefix=lexar+64gb+sd+cards+mic%2Caps%2C120&sr=8-3"> Amazon </a> |
