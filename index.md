@@ -27,6 +27,7 @@ The button piano base kit consists of mechanical buttons that, when pressed, pro
 
 # Schematics 
 
+![Headstone Image](schematic_roger.png)
 
 # Code
 
