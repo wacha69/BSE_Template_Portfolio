@@ -1,12 +1,6 @@
 # Button Piano
 I created a button piano that bears the most similarities to an actual piano. This, of course, meant incorporating actual pedaling with your feet, as well as modifications like reverb with a speaker. Building the actual piano itself was not the real challenge; rather, the code and trying to mimic the functionality of an actual piano/keyboard, which you would play as an instrument, were the real challenges.
 
-You should comment out all portions of your portfolio that you have not completed yet, as well as any instructions:
-```HTML 
-<!--- This is an HTML comment in Markdown -->
-<!--- Anything between these symbols will not render on the published site -->
-```
-
 | **Engineer** | **School** | **Area of Interest** | **Grade** |
 |:--:|:--:|:--:|:--:|
 | Roger Z | Wilcox High School | Electrical Engineering | Incoming Senior
